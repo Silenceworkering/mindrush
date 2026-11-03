@@ -1,0 +1,3 @@
+import './server.js';
+const token=process.env.BOT_TOKEN,base=process.env.PUBLIC_URL,secret=process.env.WEBHOOK_SECRET;
+if(token&&base&&secret){const endpoint='https://api.telegram.org/bot'+token+'/setWebhook';fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:base.replace(/\/$/,'')+'/telegram/webhook',secret_token:secret,allowed_updates:['message','pre_checkout_query']})}).then(r=>r.json()).then(r=>console.log(r.ok?'Telegram webhook configured':'Telegram webhook setup failed: '+r.description)).catch(e=>console.error('Telegram webhook network error:',e.message))}else console.log('Telegram webhook not configured: check BOT_TOKEN, PUBLIC_URL, WEBHOOK_SECRET');
